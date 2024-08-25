@@ -34,9 +34,9 @@ export function Header({ session }: { session: string | null }) {
           <div className="flex items-center space-x-6">
             <nav>
               <ul className="flex space-x-4">
-                <li><a href="#" className="hover:text-indigo-200 transition duration-300">Chat</a></li>
-                <li><a href="#" className="hover:text-indigo-200 transition duration-300">Dashboard</a></li>
-                <li><a href="#" className="hover:text-indigo-200 transition duration-300">Settings</a></li>
+                <li><a href="/chat" className="hover:text-indigo-200 transition duration-300">Chat</a></li>
+                <li><a href="/dashboard" className="hover:text-indigo-200 transition duration-300">Dashboard</a></li>
+                <li><a href="/settings" className="hover:text-indigo-200 transition duration-300">Settings</a></li>
               </ul>
             </nav>
             <button 
