@@ -2,6 +2,12 @@
 
 import { useState } from 'react';
 
+const Spinner = () => (
+  <div className="flex justify-center items-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+  </div>
+);
+
 export default function ChatPage() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [input, setInput] = useState('');
@@ -18,6 +24,8 @@ export default function ChatPage() {
     const newMessages = [...messages, { role: 'user', content: input }];
     setMessages(newMessages);
     setInput('');
+
+    setMessages([...newMessages, { role: 'assistant', content: 'Loading...' }]);
 
     try {
       const response = await fetch('/api/chat', {
@@ -36,7 +44,7 @@ export default function ChatPage() {
       setMessages([...newMessages, data.result]);
     } catch (error) {
       console.error('Error:', error);
-      // エラーメッセージを表示するなどのエラーハンドリングをここに追加
+      setMessages([...newMessages, { role: 'assistant', content: 'An error occurred. Please try again.' }]);
     } finally {
       setIsLoading(false);
     }
@@ -92,7 +100,7 @@ export default function ChatPage() {
                 message.role === "user" ? "bg-blue-200 ml-auto" : "bg-white"
               } max-w-[80%]`}
             >
-              <p>{message.content}</p>
+              {message.content === 'Loading...' ? <Spinner /> : <p>{message.content}</p>}
             </div>
           ))}
           {messages.length > 0 && (
