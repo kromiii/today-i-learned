@@ -22,7 +22,7 @@ export function Header({ session }: { session: string | null }) {
   return (
     <header className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <a href="/" className="text-2xl font-bold">Logo</a>
+        <a href="/" className="text-2xl font-bold">Today I Learned</a>
         {!userSessionId ? (
           <button 
             onClick={handleSignIn}
@@ -34,9 +34,9 @@ export function Header({ session }: { session: string | null }) {
           <div className="flex items-center space-x-6">
             <nav>
               <ul className="flex space-x-4">
-                <li><a href="#" className="hover:text-indigo-200 transition duration-300">Menu A</a></li>
-                <li><a href="#" className="hover:text-indigo-200 transition duration-300">Menu B</a></li>
-                <li><a href="#" className="hover:text-indigo-200 transition duration-300">Menu C</a></li>
+                <li><a href="#" className="hover:text-indigo-200 transition duration-300">Chat</a></li>
+                <li><a href="#" className="hover:text-indigo-200 transition duration-300">Dashboard</a></li>
+                <li><a href="#" className="hover:text-indigo-200 transition duration-300">Settings</a></li>
               </ul>
             </nav>
             <button 
