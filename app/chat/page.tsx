@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
+import Modal from "react-modal";
 
 const Spinner = () => (
   <div className="flex justify-center items-center">
@@ -9,42 +10,49 @@ const Spinner = () => (
 );
 
 export default function ChatPage() {
-  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
-  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>(
+    []
+  );
+  const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isWisdomLoading, setIsWisdomLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [wisdom, setWisdom] = useState("");
+  // const [title, setTitle] = useState("");
+  // const [wisdom, setWisdom] = useState("");
+  const [wisdom, setWisdom] = useState({ title: "", description: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
     setIsLoading(true);
-    const newMessages = [...messages, { role: 'user', content: input }];
+    const newMessages = [...messages, { role: "user", content: input }];
     setMessages(newMessages);
-    setInput('');
+    setInput("");
 
-    setMessages([...newMessages, { role: 'assistant', content: 'Loading...' }]);
+    setMessages([...newMessages, { role: "assistant", content: "Loading..." }]);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
+      const response = await fetch("/api/chat", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ messages: newMessages }),
       });
 
       if (!response.ok) {
-        throw new Error('API response was not ok');
+        throw new Error("API response was not ok");
       }
 
       const data = await response.json();
       setMessages([...newMessages, data.result]);
     } catch (error) {
-      console.error('Error:', error);
-      setMessages([...newMessages, { role: 'assistant', content: 'An error occurred. Please try again.' }]);
+      console.error("Error:", error);
+      setMessages([
+        ...newMessages,
+        { role: "assistant", content: "An error occurred. Please try again." },
+      ]);
     } finally {
       setIsLoading(false);
     }
@@ -54,12 +62,33 @@ export default function ChatPage() {
     setMessages([]);
   };
 
-  const handleWisdomSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Wisdom submitted:", wisdom);
-    setIsModalOpen(false);
-    setWisdom("");
-    setTitle("");
+  const handleTurnIntoWisdom = async () => {
+    setIsModalOpen(true);
+    setIsWisdomLoading(true);
+    try {
+      const response = await fetch("/api/digest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ messages }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to digest messages");
+      }
+
+      const { result } = await response.json();
+      setWisdom(result);
+    } catch (error) {
+      console.error("Error turning into wisdom:", error);
+      setWisdom({
+        title: "Error",
+        description: "Failed to generate wisdom. Please try again.",
+      });
+    } finally {
+      setIsWisdomLoading(false);
+    }
   };
 
   return (
@@ -79,7 +108,7 @@ export default function ChatPage() {
             className="bg-blue-600 text-white p-2 rounded-r-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:bg-blue-300"
             disabled={isLoading}
           >
-            {isLoading ? 'Sending...' : 'Send'}
+            {isLoading ? "Sending..." : "Send"}
           </button>
           <button
             type="button"
@@ -100,13 +129,17 @@ export default function ChatPage() {
                 message.role === "user" ? "bg-blue-200 ml-auto" : "bg-white"
               } max-w-[80%]`}
             >
-              {message.content === 'Loading...' ? <Spinner /> : <p>{message.content}</p>}
+              {message.content === "Loading..." ? (
+                <Spinner />
+              ) : (
+                <p>{message.content}</p>
+              )}
             </div>
           ))}
           {messages.length > 0 && (
             <div className="flex justify-center">
               <button
-                onClick={() => setIsModalOpen(true)}
+                onClick={handleTurnIntoWisdom}
                 className="mt-4 bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 Turn into wisdom
@@ -116,43 +149,51 @@ export default function ChatPage() {
         </div>
       </main>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg w-96">
-            <h2 className="text-xl font-bold mb-4">What did you learn?</h2>
-            <form onSubmit={handleWisdomSubmit}>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => {
+          if (!isWisdomLoading) setIsModalOpen(false);
+        }}
+        contentLabel="Wisdom Modal"
+        className="fixed inset-0 flex items-center justify-center z-50"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+      >
+        <div className="bg-white rounded-lg p-8 max-w-md w-full">
+          <h2 className="text-2xl font-bold mb-4">Wisdom</h2>
+          {isWisdomLoading ? (
+            <div className="flex justify-center items-center h-32">
+              <Spinner />
+            </div>
+          ) : (
+            <>
               <input
                 type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 border rounded-lg mb-4"
-                placeholder="Enter a title..."
+                value={wisdom.title}
+                onChange={(e) =>
+                  setWisdom({ ...wisdom, title: e.target.value })
+                }
+                placeholder="Title"
+                className="w-full p-2 mb-4 border border-gray-300 rounded"
               />
               <textarea
-                value={wisdom}
-                onChange={(e) => setWisdom(e.target.value)}
-                className="w-full h-32 p-2 border rounded-lg mb-4"
-                placeholder="Enter your wisdom here..."
+                value={wisdom.description}
+                onChange={(e) =>
+                  setWisdom({ ...wisdom, description: e.target.value })
+                }
+                placeholder="Description"
+                className="w-full p-2 mb-4 border border-gray-300 rounded h-32"
               />
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="mr-2 px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
+            </>
+          )}
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            disabled={isWisdomLoading}
+          >
+            Close
+          </button>
         </div>
-      )}
+      </Modal>
     </div>
   );
 }
