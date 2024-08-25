@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Modal from "react-modal";
 import Spinner from "./Spinner";
 
@@ -14,7 +14,38 @@ interface WisdomModalProps {
   setWisdom: React.Dispatch<React.SetStateAction<Wisdom>>;
   isLoading: boolean;
 }
-export default function WisdomModal({ isOpen, setIsOpen, wisdom, setWisdom, isLoading }: WisdomModalProps) {
+export default function WisdomModal({
+  isOpen,
+  setIsOpen,
+  wisdom,
+  setWisdom,
+  isLoading,
+}: WisdomModalProps) {
+  const saveWisdom = async () => {
+    try {
+      const response = await fetch("/api/saveWisdom", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: wisdom.title,
+          description: wisdom.description,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save wisdom");
+      }
+
+      const data = await response.json();
+      console.log("Wisdom saved with ID:", data.id);
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error saving wisdom:", error);
+    }
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -42,7 +73,9 @@ export default function WisdomModal({ isOpen, setIsOpen, wisdom, setWisdom, isLo
             />
             <textarea
               value={wisdom.description}
-              onChange={(e) => setWisdom({ ...wisdom, description: e.target.value })}
+              onChange={(e) =>
+                setWisdom({ ...wisdom, description: e.target.value })
+              }
               placeholder="Description"
               className="w-full p-2 mb-4 border border-gray-300 rounded h-32"
             />
@@ -54,6 +87,13 @@ export default function WisdomModal({ isOpen, setIsOpen, wisdom, setWisdom, isLo
           disabled={isLoading}
         >
           Close
+        </button>
+        <button
+          onClick={saveWisdom}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          disabled={isLoading}
+        >
+          Save
         </button>
       </div>
     </Modal>
