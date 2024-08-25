@@ -81,20 +81,22 @@ export default function WisdomModal({
             />
           </>
         )}
-        <button
-          onClick={() => setIsOpen(false)}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          disabled={isLoading}
-        >
-          Close
-        </button>
-        <button
-          onClick={saveWisdom}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          disabled={isLoading}
-        >
-          Save
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={saveWisdom}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            disabled={isLoading}
+          >
+            Save
+          </button>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+            disabled={isLoading}
+          >
+            Close
+          </button>
+        </div>
       </div>
     </Modal>
   );
