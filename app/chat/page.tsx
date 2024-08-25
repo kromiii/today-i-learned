@@ -1,30 +1,53 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from 'react';
+
+const Spinner = () => (
+  <div className="flex justify-center items-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+  </div>
+);
 
 export default function ChatPage() {
-  const [messages, setMessages] = useState<{ role: string; content: string }[]>(
-    []
-  );
-  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [wisdom, setWisdom] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isLoading) return;
 
-    setMessages((prev) => [...prev, { role: "user", content: input }]);
+    setIsLoading(true);
+    const newMessages = [...messages, { role: 'user', content: input }];
+    setMessages(newMessages);
+    setInput('');
 
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: `You said: ${input}` },
-      ]);
-    }, 1000);
+    setMessages([...newMessages, { role: 'assistant', content: 'Loading...' }]);
 
-    setInput("");
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ messages: newMessages }),
+      });
+
+      if (!response.ok) {
+        throw new Error('API response was not ok');
+      }
+
+      const data = await response.json();
+      setMessages([...newMessages, data.result]);
+    } catch (error) {
+      console.error('Error:', error);
+      setMessages([...newMessages, { role: 'assistant', content: 'An error occurred. Please try again.' }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleRefresh = () => {
@@ -49,12 +72,14 @@ export default function ChatPage() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message here..."
             className="flex-grow p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+            disabled={isLoading}
           />
           <button
             type="submit"
-            className="bg-blue-600 text-white p-2 rounded-r-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="bg-blue-600 text-white p-2 rounded-r-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:bg-blue-300"
+            disabled={isLoading}
           >
-            Send
+            {isLoading ? 'Sending...' : 'Send'}
           </button>
           <button
             type="button"
@@ -75,7 +100,7 @@ export default function ChatPage() {
                 message.role === "user" ? "bg-blue-200 ml-auto" : "bg-white"
               } max-w-[80%]`}
             >
-              <p>{message.content}</p>
+              {message.content === 'Loading...' ? <Spinner /> : <p>{message.content}</p>}
             </div>
           ))}
           {messages.length > 0 && (
