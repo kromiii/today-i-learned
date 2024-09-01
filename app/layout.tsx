@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
 
 import Header from "@/components/header"; // added
-import { SESSION_COOKIE_NAME } from "@/constants"; // added
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,12 +16,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = cookies().get(SESSION_COOKIE_NAME)?.value || null;
 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header session={session} />
+        <Header />
         {children}
       </body>
     </html>

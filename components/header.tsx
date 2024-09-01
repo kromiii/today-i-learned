@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation"
 import { signInWithGoogle, signOut } from "@/libs/firebase/auth";
 
-export function  Header({ session }: { session: string | null }) {
+export function  Header() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
