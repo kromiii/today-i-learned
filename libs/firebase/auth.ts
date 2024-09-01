@@ -1,35 +1,47 @@
-import {
-  type User,
-  GoogleAuthProvider,
-  signInWithPopup,
-  onAuthStateChanged as _onAuthStateChanged,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-import { firebaseAuth } from "./config";
-
-export function onAuthStateChanged(callback: (authUser: User | null) => void) {
-  return _onAuthStateChanged(firebaseAuth, callback);
-}
+import { APIResponse } from "@/types";
+import { auth } from "./firebase";
 
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
 
   try {
-    const result = await signInWithPopup(firebaseAuth, provider);
+    const userCreds = await signInWithPopup(auth, provider);
+    const idToken = await userCreds.user.getIdToken();
 
-    if (!result || !result.user) {
-      throw new Error("Google sign in failed");
-    }
-    return result.user.uid;
+    const response = await fetch("/api/auth/sign-in", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idToken }),
+    });
+    const resBody = (await response.json()) as unknown as APIResponse<string>;
+    if (response.ok && resBody.success) {
+      return true;
+    } else return false;
   } catch (error) {
     console.error("Error signing in with Google", error);
+    return false;
   }
 }
 
-export async function signOutWithGoogle() {
+export async function signOut() {
   try {
-    await firebaseAuth.signOut();
+    await auth.signOut();
+
+    const response = await fetch("/api/auth/sign-out", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const resBody = (await response.json()) as unknown as APIResponse<string>;
+    if (response.ok && resBody.success) {
+      return true;
+    } else return false;
   } catch (error) {
     console.error("Error signing out with Google", error);
+    return false;
   }
 }
