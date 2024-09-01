@@ -1,30 +1,44 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"
 import { signInWithGoogle, signOut } from "@/libs/firebase/auth";
 
-export function  Header() {
+export function Header({ isAuthenticatedPromise }: { isAuthenticatedPromise: Promise<boolean> }) {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    isAuthenticatedPromise.then(auth => {
+      setIsAuthenticated(auth);
+    });
+  }, [isAuthenticatedPromise]);
 
   const handleSignIn = async () => {
     const isOk = await signInWithGoogle();
-    console.log("isOk")
-    console.log(isOk)
-    if (isOk) router.push("/chat")
+    if (isOk) {
+      setIsAuthenticated(true);
+      router.push("/chat");
+    }
   };
 
   const handleSignOut = async () => {
     const isOk = await signOut();
-    if (isOk) router.push("/sign-in")
+    if (isOk) {
+      setIsAuthenticated(false);
+      router.push("/");
+    }
   };
   
+  if (isAuthenticated === null) {
+    return <div>Loading...</div>; // または適切なローディング表示
+  }
+
   return (
     <header className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <a href="/" className="text-2xl font-bold">Today I Learned</a>
-        {!isLoggedIn ? (
+        {!isAuthenticated ? (
           <button 
             onClick={handleSignIn}
             className="bg-white text-indigo-600 px-4 py-2 rounded-full hover:bg-indigo-100 transition duration-300"
