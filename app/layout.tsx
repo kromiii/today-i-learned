@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
 
-import Header from "@/components/header"; // added
-import { SESSION_COOKIE_NAME } from "@/constants"; // added
+import Header from "@/components/header";
+import { isUserAuthenticated } from "@/libs/firebase/firebase-admin";
+
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,12 +18,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = cookies().get(SESSION_COOKIE_NAME)?.value || null;
+  const isAuthenticated = isUserAuthenticated();
 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header session={session} />
+        <Header isAuthenticatedPromise={isAuthenticated} />
         {children}
       </body>
     </html>
