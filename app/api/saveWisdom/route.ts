@@ -1,15 +1,17 @@
 import { NextResponse } from 'next/server';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import { firebaseApp } from '../../../libs/firebase/config';
+import { getFirestore } from 'firebase-admin/firestore';
+import { firebaseApp, getCurrentUser } from '@/libs/firebase/firebase-admin';
 
 export async function POST(request: Request) {
   const { title, description } = await request.json();
+  const user = await getCurrentUser();
 
   try {
     const db = getFirestore(firebaseApp);
-    const docRef = await addDoc(collection(db, "wisdoms"), {
+    const docRef = await db.collection('wisdoms').add({
       title,
       description,
+      userId: user?.uid,
       createdAt: new Date()
     });
 
