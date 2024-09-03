@@ -9,17 +9,18 @@ export default function DashboardClient() {
   const [weeklyLearningCounts, setWeeklyLearningCounts] = useState<number[]>([]);
 
   useEffect(() => {
-    // データ取得のロジック（現在のコードと同じ）
-    const fetchedLearnings = [
-      "Reactのuseeffectフックについて学んだ",
-      "TypeScriptの型推論について理解を深めた",
-      "NextJSのSSRとSSGの違いを理解した",
-    ];
-    setLearnings(fetchedLearnings);
-
-    const dummyWeeklyData = [3, 2, 4, 1, 3, 5, 3];
-    setWeeklyLearningCounts(dummyWeeklyData);
+    const fetchDashboardData = async () => {
+      const response = await fetch('/api/dashboard-data');
+      if (response.ok) {
+        const data = await response.json();
+        setLearnings(data.learnings);
+        setWeeklyLearningCounts(data.weeklyLearningCounts);
+      }
+    };
+  
+    fetchDashboardData();
   }, []);
+  
 
   return (
     <div className="container mx-auto px-4 py-8">
