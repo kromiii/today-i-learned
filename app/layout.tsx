@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import Header from "@/components/header";
-import { isUserAuthenticated } from "@/libs/firebase/firebase-admin";
 
 import "./globals.css";
 
@@ -18,12 +17,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isAuthenticated = isUserAuthenticated();
 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header isAuthenticatedPromise={isAuthenticated} />
+        <Header />
         {children}
       </body>
     </html>
