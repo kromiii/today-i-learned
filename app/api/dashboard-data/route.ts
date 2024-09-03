@@ -1,5 +1,3 @@
-// app/api/dashboard-data/route.ts
-
 import { NextResponse } from "next/server";
 import { getFirestore } from "firebase-admin/firestore";
 import { firebaseApp, getCurrentUser } from "@/libs/firebase/firebase-admin";
