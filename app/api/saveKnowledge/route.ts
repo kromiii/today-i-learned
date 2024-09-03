@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
   try {
     const db = getFirestore(firebaseApp);
-    const docRef = await db.collection("wisdoms").add({
+    const docRef = await db.collection("knowledges").add({
       title,
       description,
       userId: user.uid,
@@ -20,13 +20,13 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({
-      message: "Wisdom saved successfully",
+      message: "Knowledge saved successfully",
       id: docRef.id,
     });
   } catch (error) {
-    console.error("Error saving wisdom:", error);
+    console.error("Error saving knowledge:", error);
     return NextResponse.json(
-      { message: "Error saving wisdom" },
+      { message: "Error saving knowledge" },
       { status: 500 }
     );
   }

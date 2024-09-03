@@ -4,8 +4,8 @@ import { useState } from "react";
 import Header from "@/components/chat/ChatHeader";
 import ChatInput from "@/components/chat/ChatInput";
 import MessageList from "@/components/chat/MessageList";
-import WisdomButton from "@/components/chat/WisdomButton";
-import WisdomModal from "@/components/chat/WisdomModal";
+import KnowledgeButton from "@/components/chat/KnowledgeButton";
+import KnowledgeModal from "@/components/chat/KnowledgeModal";
 
 export default function ChatClient() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
@@ -13,9 +13,9 @@ export default function ChatClient() {
   );
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isWisdomLoading, setIsWisdomLoading] = useState(false);
+  const [isKnowledgeLoading, setIsKnowledgeLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [wisdom, setWisdom] = useState({ title: "", description: "" });
+  const [knowledge, setKnowledge] = useState({ title: "", description: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,9 +58,9 @@ export default function ChatClient() {
     setMessages([]);
   };
 
-  const handleTurnIntoWisdom = async () => {
+  const handleTurnIntoKnowledge = async () => {
     setIsModalOpen(true);
-    setIsWisdomLoading(true);
+    setIsKnowledgeLoading(true);
     try {
       const response = await fetch("/api/digest", {
         method: "POST",
@@ -75,15 +75,15 @@ export default function ChatClient() {
       }
 
       const { result } = await response.json();
-      setWisdom(result);
+      setKnowledge(result);
     } catch (error) {
-      console.error("Error turning into wisdom:", error);
-      setWisdom({
+      console.error("Error turning into knowledge:", error);
+      setKnowledge({
         title: "Error",
-        description: "Failed to generate wisdom. Please try again.",
+        description: "Failed to generate knowledge. Please try again.",
       });
     } finally {
-      setIsWisdomLoading(false);
+      setIsKnowledgeLoading(false);
     }
   };
 
@@ -103,17 +103,19 @@ export default function ChatClient() {
         <div className="max-w-2xl mx-auto">
           <MessageList messages={messages} />
           {messages.length > 0 && (
-            <WisdomButton handleTurnIntoWisdom={handleTurnIntoWisdom} />
+            <KnowledgeButton
+              handleTurnIntoKnowledge={handleTurnIntoKnowledge}
+            />
           )}
         </div>
       </main>
 
-      <WisdomModal
+      <KnowledgeModal
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
-        wisdom={wisdom}
-        setWisdom={setWisdom}
-        isLoading={isWisdomLoading}
+        knowledge={knowledge}
+        setKnowledge={setKnowledge}
+        isLoading={isKnowledgeLoading}
       />
     </div>
   );

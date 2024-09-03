@@ -2,47 +2,47 @@ import React from "react";
 import Modal from "react-modal";
 import Spinner from "./Spinner";
 
-interface Wisdom {
+interface Knowledge {
   title: string;
   description: string;
 }
 
-interface WisdomModalProps {
+interface KnowledgeModalProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  wisdom: Wisdom;
-  setWisdom: React.Dispatch<React.SetStateAction<Wisdom>>;
+  knowledge: Knowledge;
+  setKnowledge: React.Dispatch<React.SetStateAction<Knowledge>>;
   isLoading: boolean;
 }
-export default function WisdomModal({
+export default function KnowledgeModal({
   isOpen,
   setIsOpen,
-  wisdom,
-  setWisdom,
+  knowledge,
+  setKnowledge,
   isLoading,
-}: WisdomModalProps) {
-  const saveWisdom = async () => {
+}: KnowledgeModalProps) {
+  const saveKnowledge = async () => {
     try {
-      const response = await fetch("/api/saveWisdom", {
+      const response = await fetch("/api/saveKnowledge", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          title: wisdom.title,
-          description: wisdom.description,
+          title: knowledge.title,
+          description: knowledge.description,
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save wisdom");
+        throw new Error("Failed to save knowledge");
       }
 
       const data = await response.json();
-      console.log("Wisdom saved with ID:", data.id);
+      console.log("Knowledge saved with ID:", data.id);
       setIsOpen(false);
     } catch (error) {
-      console.error("Error saving wisdom:", error);
+      console.error("Error saving knowledge:", error);
     }
   };
 
@@ -52,7 +52,7 @@ export default function WisdomModal({
       onRequestClose={() => {
         if (!isLoading) setIsOpen(false);
       }}
-      contentLabel="Wisdom Modal"
+      contentLabel="Knowledge Modal"
       className="fixed inset-0 flex items-center justify-center z-50"
       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
     >
@@ -66,30 +66,32 @@ export default function WisdomModal({
         ) : (
           <>
             <label
-              htmlFor="wisdom-title"
+              htmlFor="knowledge-title"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               Title
             </label>
             <input
-              id="wisdom-title"
+              id="knowledge-title"
               type="text"
-              value={wisdom.title}
-              onChange={(e) => setWisdom({ ...wisdom, title: e.target.value })}
+              value={knowledge.title}
+              onChange={(e) =>
+                setKnowledge({ ...knowledge, title: e.target.value })
+              }
               placeholder="Enter title"
               className="w-full p-2 mb-4 border border-gray-300 rounded"
             />
             <label
-              htmlFor="wisdom-description"
+              htmlFor="knowledge-description"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               Description
             </label>
             <textarea
-              id="wisdom-description"
-              value={wisdom.description}
+              id="knowledge-description"
+              value={knowledge.description}
               onChange={(e) =>
-                setWisdom({ ...wisdom, description: e.target.value })
+                setKnowledge({ ...knowledge, description: e.target.value })
               }
               placeholder="Enter description"
               className="w-full p-2 mb-4 border border-gray-300 rounded h-32"
@@ -99,7 +101,7 @@ export default function WisdomModal({
 
         <div className="flex gap-2">
           <button
-            onClick={saveWisdom}
+            onClick={saveKnowledge}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             disabled={isLoading}
           >

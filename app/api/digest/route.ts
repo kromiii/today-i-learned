@@ -8,7 +8,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const Wisdom = z.object({
+const Knowledge = z.object({
   title: z.string(),
   description: z.string(),
 });
@@ -33,11 +33,11 @@ export async function POST(req: Request) {
         },
         ...messages,
       ],
-      response_format: zodResponseFormat(Wisdom, "wisdom"),
+      response_format: zodResponseFormat(Knowledge, "knowledge"),
     });
 
-    const wisdom = completion.choices[0].message.parsed;
-    return NextResponse.json({ result: wisdom });
+    const knowledge = completion.choices[0].message.parsed;
+    return NextResponse.json({ result: knowledge });
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
