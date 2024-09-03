@@ -8,6 +8,9 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
+  Scale,
+  LinearScaleOptions
 } from "chart.js";
 
 ChartJS.register(
@@ -40,22 +43,31 @@ export default function WeeklyLearningChart({
     labels: getLast7Days(),
     datasets: [
       {
-        label: "Number of Learnings",
+        label: "Number of Knowledges",
         data: weeklyLearningCounts,
         backgroundColor: "rgba(75, 192, 192, 0.6)",
       },
     ],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<"bar"> = {
     responsive: true,
     scales: {
       y: {
         beginAtZero: true,
+        max: Math.max(...weeklyLearningCounts) + 1,
         ticks: {
           stepSize: 1,
+          callback: function(
+            this: Scale<LinearScaleOptions>, 
+            tickValue: number | string, 
+            index: number, 
+            ticks: { value: number }[]
+          ): string | number | null | undefined {
+            return index < ticks.length - 1 ? tickValue : '';
+          }
         },
-      },
+      } as LinearScaleOptions,
     },
   };
 
