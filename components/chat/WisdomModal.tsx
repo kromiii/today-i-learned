@@ -57,30 +57,46 @@ export default function WisdomModal({
       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
     >
       <div className="bg-white rounded-lg p-8 max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4">Wisdom</h2>
+        <h2 className="text-2xl font-bold mb-4">What I learned</h2>
+
         {isLoading ? (
           <div className="flex justify-center items-center h-32">
             <Spinner />
           </div>
         ) : (
           <>
+            <label
+              htmlFor="wisdom-title"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Title
+            </label>
             <input
+              id="wisdom-title"
               type="text"
               value={wisdom.title}
               onChange={(e) => setWisdom({ ...wisdom, title: e.target.value })}
-              placeholder="Title"
+              placeholder="Enter title"
               className="w-full p-2 mb-4 border border-gray-300 rounded"
             />
+            <label
+              htmlFor="wisdom-description"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Description
+            </label>
             <textarea
+              id="wisdom-description"
               value={wisdom.description}
               onChange={(e) =>
                 setWisdom({ ...wisdom, description: e.target.value })
               }
-              placeholder="Description"
+              placeholder="Enter description"
               className="w-full p-2 mb-4 border border-gray-300 rounded h-32"
             />
           </>
         )}
+
         <div className="flex gap-2">
           <button
             onClick={saveWisdom}
