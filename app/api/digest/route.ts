@@ -28,7 +28,8 @@ export async function POST(req: Request) {
       messages: [
         {
           role: "system",
-          content: "Extract what the user learned from the chat to the bot",
+          content:
+            "Extract what the user learned from the chat to the bot. Provide the response in plain text without using any markdown formatting.",
         },
         ...messages,
       ],
