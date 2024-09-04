@@ -10,7 +10,9 @@ interface LearningListProps {
 export default function LearningList({ learnings }: LearningListProps) {
   return (
     <div className="mb-8">
-      <h2 className="text-2xl font-semibold mb-4">What I Learned Today:</h2>
+      <h2 className="text-3xl font-bold mb-6 text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+        🚀 Today&apos;s Discoveries
+      </h2>
       {learnings.length > 0 ? (
         <ul className="space-y-4">
           {learnings.map((learning, index) => (
