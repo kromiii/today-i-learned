@@ -10,7 +10,7 @@ import {
   Legend,
   ChartOptions,
   Scale,
-  LinearScaleOptions
+  LinearScaleOptions,
 } from "chart.js";
 
 ChartJS.register(
@@ -58,14 +58,14 @@ export default function WeeklyLearningChart({
         max: Math.max(...weeklyLearningCounts) + 1,
         ticks: {
           stepSize: 1,
-          callback: function(
-            this: Scale<LinearScaleOptions>, 
-            tickValue: number | string, 
-            index: number, 
+          callback: function (
+            this: Scale<LinearScaleOptions>,
+            tickValue: number | string,
+            index: number,
             ticks: { value: number }[]
           ): string | number | null | undefined {
-            return index < ticks.length - 1 ? tickValue : '';
-          }
+            return index < ticks.length - 1 ? tickValue : "";
+          },
         },
       } as LinearScaleOptions,
     },
@@ -73,8 +73,8 @@ export default function WeeklyLearningChart({
 
   return (
     <div className="w-full max-w-2xl">
-      <h2 className="text-2xl font-semibold mb-4">
-        Learning Count (Last 7 Days)
+      <h2 className="text-2xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+        7-Day Learning Snapshot
       </h2>
       <Bar data={chartData} options={chartOptions} />
     </div>
