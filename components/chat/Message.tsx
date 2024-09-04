@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import Spinner from "./Spinner";
 
 interface MessageType {
@@ -20,7 +21,7 @@ export default function Message({ message }: MessageProps) {
       {message.content === "Loading..." ? (
         <Spinner />
       ) : (
-        <p>{message.content}</p>
+        <ReactMarkdown>{message.content}</ReactMarkdown>
       )}
     </div>
   );

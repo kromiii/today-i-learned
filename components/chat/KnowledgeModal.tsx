@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import Spinner from "./Spinner";
 
@@ -14,6 +14,7 @@ interface KnowledgeModalProps {
   setKnowledge: React.Dispatch<React.SetStateAction<Knowledge>>;
   isLoading: boolean;
 }
+
 export default function KnowledgeModal({
   isOpen,
   setIsOpen,
@@ -21,7 +22,10 @@ export default function KnowledgeModal({
   setKnowledge,
   isLoading,
 }: KnowledgeModalProps) {
+  const [isSaving, setIsSaving] = useState(false);
+
   const saveKnowledge = async () => {
+    setIsSaving(true);
     try {
       const response = await fetch("/api/saveKnowledge", {
         method: "POST",
@@ -43,6 +47,8 @@ export default function KnowledgeModal({
       setIsOpen(false);
     } catch (error) {
       console.error("Error saving knowledge:", error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -50,7 +56,7 @@ export default function KnowledgeModal({
     <Modal
       isOpen={isOpen}
       onRequestClose={() => {
-        if (!isLoading) setIsOpen(false);
+        if (!isLoading && !isSaving) setIsOpen(false);
       }}
       contentLabel="Knowledge Modal"
       className="fixed inset-0 flex items-center justify-center z-50"
@@ -59,7 +65,7 @@ export default function KnowledgeModal({
       <div className="bg-white rounded-lg p-8 max-w-md w-full">
         <h2 className="text-2xl font-bold mb-4">What I learned</h2>
 
-        {isLoading ? (
+        {isLoading || isSaving ? (
           <div className="flex justify-center items-center h-32">
             <Spinner />
           </div>
@@ -103,14 +109,14 @@ export default function KnowledgeModal({
           <button
             onClick={saveKnowledge}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            disabled={isLoading}
+            disabled={isLoading || isSaving}
           >
-            Save
+            {isSaving ? "Saving..." : "Save"}
           </button>
           <button
             onClick={() => setIsOpen(false)}
             className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-            disabled={isLoading}
+            disabled={isLoading || isSaving}
           >
             Close
           </button>
