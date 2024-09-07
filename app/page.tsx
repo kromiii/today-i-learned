@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import SignInButton from "@/components/header/SignInButton";
 
 interface FeatureCardProps {
   title: string;
@@ -45,12 +46,7 @@ export default function Home() {
       </div>
 
       <div className="mt-12 text-center">
-        <Link
-          href="/dashboard"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Get Started
-        </Link>
+        <SignInButton />
       </div>
     </main>
   );

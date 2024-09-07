@@ -13,7 +13,7 @@ export default async function Header() {
           Today I Learned
         </Link>
         <div>
-          {currentUser ? (
+          {currentUser && (
             <>
               <Link href="/chat" className="text-white mr-4">
                 Chat
@@ -23,8 +23,6 @@ export default async function Header() {
               </Link>
               <SignOutButton />
             </>
-          ) : (
-            <SignInButton />
           )}
         </div>
       </nav>
