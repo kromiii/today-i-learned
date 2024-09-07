@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/react-modal": "^3.16.3",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "chart.js": "^4.4.4",
     "firebase": "^10.13.1",
     "firebase-admin": "^12.4.0",
@@ -20,6 +21,7 @@
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
     "react-modal": "^3.16.1",
+    "react-syntax-highlighter": "^15.5.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
