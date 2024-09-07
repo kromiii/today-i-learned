@@ -10,8 +10,15 @@ interface FeatureCardProps {
 export default function Home() {
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl md:text-5xl font-bold text-center text-blue-600 mb-8 uppercase tracking-wide shadow-lg p-4 bg-gray-100 rounded-lg">
-        Today I Learned
+      <h1 className="relative text-5xl md:text-6xl font-extrabold text-center mb-10 uppercase tracking-wide">
+        <span className="text-blue-600">Today</span>{" "}
+        <span className="relative">
+          I{" "}
+          <span className="relative z-10">
+            Learned
+            <span className="absolute bottom-1 left-0 w-full h-3 bg-yellow-300 -z-10 transform -skew-x-3"></span>
+          </span>
+        </span>
       </h1>
 
       <p className="text-xl text-center mb-12">
