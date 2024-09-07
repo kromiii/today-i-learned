@@ -1,6 +1,5 @@
 import { getCurrentUser } from "@/libs/firebase/firebase-admin";
 import SignOutButton from "./header/SignOutButton";
-import SignInButton from "./header/SignInButton";
 import Link from "next/link";
 
 export default async function Header() {
@@ -9,11 +8,11 @@ export default async function Header() {
   return (
     <header className="bg-blue-500 p-4">
       <nav className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="text-white text-2xl font-bold">
+        <Link href="#" className="text-white text-2xl font-bold">
           Today I Learned
         </Link>
         <div>
-          {currentUser ? (
+          {currentUser && (
             <>
               <Link href="/chat" className="text-white mr-4">
                 Chat
@@ -23,8 +22,6 @@ export default async function Header() {
               </Link>
               <SignOutButton />
             </>
-          ) : (
-            <SignInButton />
           )}
         </div>
       </nav>
