@@ -10,14 +10,14 @@ export default function SignOutButton() {
   const handleSignOut = async () => {
     const isOk = await signOut();
     if (isOk) {
-      window.location.href = '/'; // Redirect to the home page after sign out
+      window.location.href = '/';
     }
   };
 
   return (
     <button
       onClick={handleSignOut}
-      className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded"
+      className="text-white hover:underline px-4 py-2 transition duration-300 ease-in-out"
     >
       Sign Out
     </button>
