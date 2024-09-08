@@ -1,0 +1,15 @@
+.react-syntax-highlighter-line-number {
+  display: inline-block;
+  width: 2em;
+  user-select: none;
+  opacity: 0.3;
+  text-align: center;
+  position: relative;
+}
+
+pre > code {
+  display: block;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
