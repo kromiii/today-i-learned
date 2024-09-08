@@ -103,16 +103,15 @@ export default function ChatClient() {
         <div className="max-w-2xl mx-auto">
           <MessageList messages={messages} />
         </div>
+        {messages.length > 0 && (
+          <div className="flex justify-center mt-4">
+            <KnowledgeButton
+              handleTurnIntoKnowledge={handleTurnIntoKnowledge}
+              isDisabled={isLoading}
+            />
+          </div>
+        )}
       </main>
-
-      {messages.length > 0 && (
-        <div className="flex justify-center pb-4">
-          <KnowledgeButton
-            handleTurnIntoKnowledge={handleTurnIntoKnowledge}
-            isDisabled={isLoading}
-          />
-        </div>
-      )}
 
       <KnowledgeModal
         isOpen={isModalOpen}
