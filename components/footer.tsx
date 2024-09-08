@@ -9,9 +9,17 @@ export default function Footer() {
           <Link href="/terms" className="mr-4 hover:underline">
             Terms of Service
           </Link>
-          <Link href="/privacy" className="hover:underline">
+          <Link href="/privacy" className="mr-4 hover:underline">
             Privacy Policy
           </Link>
+          <a
+            href="https://forms.gle/3wQ1PA9r7Vc9fYBm8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            Contact
+          </a>
         </div>
       </div>
     </footer>
