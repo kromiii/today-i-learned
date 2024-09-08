@@ -8,7 +8,7 @@ export default async function Header() {
   return (
     <header className="bg-blue-500 p-4">
       <nav className="container mx-auto flex justify-between items-center">
-        <Link href="#" className="text-white text-2xl font-bold">
+        <Link href="/" className="text-white text-2xl font-bold">
           Today I Learned
         </Link>
         <div>
