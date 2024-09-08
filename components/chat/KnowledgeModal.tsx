@@ -108,14 +108,22 @@ export default function KnowledgeModal({
         <div className="flex gap-2">
           <button
             onClick={saveKnowledge}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className={`text-white px-4 py-2 rounded ${
+              isLoading || isSaving
+                ? "bg-blue-300 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600"
+            }`}
             disabled={isLoading || isSaving}
           >
-            {isSaving ? "Saving..." : "Save"}
+            {isSaving ? "Saving..." : isLoading ? "Waiting..." : "Save"}
           </button>
           <button
             onClick={() => setIsOpen(false)}
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+            className={`text-white px-4 py-2 rounded ${
+              isLoading || isSaving
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-gray-500 hover:bg-gray-600"
+            }`}
             disabled={isLoading || isSaving}
           >
             Close
