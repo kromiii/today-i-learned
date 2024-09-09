@@ -31,9 +31,27 @@ export default function HamburgerMenu() {
 
   return (
     <div className="relative" ref={menuRef}>
-      <button onClick={toggleMenu} className="text-white">
-        ☰
+      <button
+        onClick={toggleMenu}
+        className="text-white p-2 focus:outline-none"
+        aria-label="メニュー"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-8 w-8"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
       </button>
+
       {isOpen && (
         <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
           <Link
@@ -50,8 +68,8 @@ export default function HamburgerMenu() {
           >
             Dashboard
           </Link>
-          <SignOutButton 
-            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" 
+          <SignOutButton
+            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
             onClick={closeMenu}
           />
         </div>
