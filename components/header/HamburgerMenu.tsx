@@ -53,23 +53,23 @@ export default function HamburgerMenu() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+        <div className="absolute left-0 top-full mt-2 w-56 bg-white rounded-md shadow-lg py-1 z-50">
           <Link
             href="/chat"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            className="block px-4 py-3 text-base text-gray-700 hover:bg-gray-100"
             onClick={closeMenu}
           >
             Chat
           </Link>
           <Link
             href="/dashboard"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            className="block px-4 py-3 text-base text-gray-700 hover:bg-gray-100"
             onClick={closeMenu}
           >
             Dashboard
           </Link>
           <SignOutButton
-            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+            className="block w-full text-left px-4 py-3 text-base text-gray-700 hover:bg-gray-100 hover:text-gray-900"
             onClick={closeMenu}
           />
         </div>
