@@ -14,6 +14,15 @@ export default function PrivacyPolicy() {
         <li>In addition to the above, to provide, maintain, protect, and improve this service</li>
       </ul>
 
+      <h2 className="text-2xl font-semibold mt-6 mb-4">Research Use of Information</h2>
+      <p>The operator may use customer information for research purposes under the following conditions:</p>
+      <ul className="list-disc pl-6 mb-4">
+        <li>All personal identifiable information will be anonymized before use in research</li>
+        <li>Research will be conducted to improve our services and contribute to academic knowledge</li>
+        <li>Research findings may be published in academic journals or presented at conferences</li>
+        <li>Customers can opt-out of their data being used for research purposes by contacting our support team</li>
+      </ul>
+
       <h2 className="text-2xl font-semibold mt-6 mb-4">Access Analysis Tool</h2>
       <p>The operator uses &quot;Google Analytics&quot; for customer access analysis. Google Analytics uses cookies to collect traffic data. Traffic data is collected anonymously and does not identify individuals. You can refuse the collection of this information by disabling cookies. Please check your browser settings for details. For more information about Google Analytics, please check the following:</p>
       <ul className="list-disc pl-6 mb-4">

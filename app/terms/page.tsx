@@ -220,11 +220,11 @@ export default function TermsOfService() {
         </li>
       </ul>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">Withdrawal</h2>
+      {/* <h2 className="text-2xl font-semibold mt-6 mb-4">Withdrawal</h2>
       <p className="mb-4">
         Users may delete their registration and withdraw from this service
         through procedures specified by the operator.
-      </p>
+      </p> */}
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">
         Disclaimer of Warranty
