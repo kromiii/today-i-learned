@@ -1,4 +1,5 @@
-import Link from "next/link";
+import Image from "next/image";
+
 import { ReactNode } from "react";
 import SignInButton from "@/components/header/SignInButton";
 
@@ -11,21 +12,34 @@ interface FeatureCardProps {
 export default function Home() {
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="relative text-5xl md:text-6xl font-extrabold text-center mb-10 uppercase tracking-wide">
-        <span className="text-blue-600">Today</span>{" "}
-        <span className="relative">
-          I{" "}
-          <span className="relative z-10">
-            Learned
-            <span className="absolute bottom-1 left-0 w-full h-3 bg-yellow-300 -z-10 transform -skew-x-3"></span>
-          </span>
-        </span>
-      </h1>
-
-      <p className="text-xl text-center mb-12">
-        AI-powered learning support. Record your daily discoveries and
-        experience your growth.
-      </p>
+      <div className="flex flex-col md:flex-row items-center justify-between mb-16">
+        <div className="md:w-1/2 mb-8 md:mb-0">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="text-blue-600">Today</span>{" "}
+            <span className="relative">
+              I{" "}
+              <span className="relative z-10">
+                Learned
+                <span className="absolute bottom-1 left-0 w-full h-3 bg-yellow-300 -z-10 transform -skew-x-3"></span>
+              </span>
+            </span>
+          </h1>
+          <p className="text-xl mb-6">
+            AI-powered learning support. Record your daily discoveries and
+            experience your growth.
+          </p>
+          <SignInButton />
+        </div>
+        <div className="md:w-1/2">
+          <Image
+            src="/images/screenshot.png"
+            alt="Today I Learned Dashboard"
+            width={600}
+            height={400}
+            className="rounded-lg shadow-lg"
+          />
+        </div>
+      </div>
 
       <div className="grid md:grid-cols-3 gap-8">
         <FeatureCard
@@ -43,10 +57,6 @@ export default function Home() {
           description="Visualize your daily learning on the dashboard. See your growth journey unfold."
           icon="📊"
         />
-      </div>
-
-      <div className="mt-12 text-center">
-        <SignInButton />
       </div>
     </main>
   );
