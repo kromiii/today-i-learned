@@ -58,6 +58,26 @@ export default function Home() {
           icon="📊"
         />
       </div>
+
+      <div className="mb-16"></div>
+
+      {/* YouTube動画の埋め込み */}
+      <div className="mt-32 mb-16">
+        <h2 className="text-3xl font-bold mb-6 text-center">
+          See it in Action
+        </h2>
+        <div className="max-w-[560px] mx-auto w-full">
+          <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+            <iframe
+              src="https://www.youtube.com/embed/MO2Tzeaca80?si=i93ecsNAO1l5Q3l_"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="absolute top-0 left-0 w-full h-full"
+            ></iframe>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
