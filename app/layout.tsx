@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer"; // 追加
@@ -53,6 +54,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer /> {/* 追加 */}
       </body>
+      <GoogleTagManager gtmId="GTM-NJZ8QDJG" />
     </html>
   );
 }
