@@ -20,7 +20,25 @@ export default function Footer() {
             Contact
           </a>
         </div>
-        <div>© 2024 Hiroyuki Kuromiya</div>
+        <div>
+          © 2024{" "}
+          <a
+            href="https://x.com/khiroyuki1993"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            Hiroyuki Kuromiya
+          </a>
+        </div>
+        <a
+          href="https://www.buymeacoffee.com/kromiii"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline text-sm"
+        >
+          ☕️ Buy Me a Coffee
+        </a>
       </div>
     </footer>
   );
