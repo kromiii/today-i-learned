@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Today I Learned - AI-Powered Learning Assistant
+
+Today I Learned is an AI-powered learning support tool that helps you record daily discoveries, interact with AI, and track your learning progress.
+
+## Features
+
+- Ask AI: Interact with an AI assistant to get answers on any topic.
+- Automatic Learning Summary: Summarize and organize your learnings from AI interactions.
+- Learning Dashboard: Visualize your daily learning progress and growth.
+- User Authentication: Secure sign-in with Google.
+
+## Technology Stack
+
+- [Next.js](https://nextjs.org/): React framework for building the frontend and API routes.
+- [Firebase](https://firebase.google.com/): Authentication and Firestore database.
+- [OpenAI](https://openai.com/): AI-powered chat functionality.
+- [Tailwind CSS](https://tailwindcss.com/): Utility-first CSS framework for styling.
+- [Chart.js](https://www.chartjs.org/): Creating interactive charts for the dashboard.
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+git clone https://github.com/yourusername/today-i-learned.git cd today-i-learned
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Set up environment variables:
+   Create a `.env.local` file in the root directory and add the following variables:
+
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id OPENAI_API_KEY=your_openai_api_key
+```
+
+4. Run the development server:
+
+```
+npm run dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about the technologies used in this project, check out the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [OpenAI API Documentation](https://platform.openai.com/docs/introduction)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Chart.js Documentation](https://www.chartjs.org/docs/latest/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is licensed under the [MIT License](LICENSE).
+
+<a href="https://www.buymeacoffee.com/kromiii" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>

@@ -54,7 +54,9 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer /> {/* 追加 */}
       </body>
-      <GoogleTagManager gtmId="GTM-NJZ8QDJG" />
+      {process.env.NEXT_PUBLIC_GTM_ID && (
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+      )}
     </html>
   );
 }

@@ -21,9 +21,9 @@ export default function Footer() {
           </a>
         </div>
         <div>
-          © 2024{" "}
+          created by {" "}
           <a
-            href="https://x.com/khiroyuki1993"
+            href="https://kuromiyahiroyuki.tech/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline"
@@ -31,14 +31,6 @@ export default function Footer() {
             Hiroyuki Kuromiya
           </a>
         </div>
-        <a
-          href="https://www.buymeacoffee.com/kromiii"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:underline text-sm"
-        >
-          ☕️ Buy Me a Coffee
-        </a>
       </div>
     </footer>
   );
