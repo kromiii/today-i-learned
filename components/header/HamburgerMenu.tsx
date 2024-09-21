@@ -68,6 +68,13 @@ export default function HamburgerMenu() {
           >
             Dashboard
           </Link>
+          <Link
+            href="/history"
+            className="block px-4 py-3 text-base text-gray-700 hover:bg-gray-100"
+            onClick={closeMenu}
+          >
+            History
+          </Link>
           <SignOutButton
             className="block w-full text-left px-4 py-3 text-base text-gray-700 hover:bg-gray-100 hover:text-gray-900"
             onClick={closeMenu}
