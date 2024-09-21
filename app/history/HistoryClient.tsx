@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import HistoryList from "@/components/history/HistoryList";
+import Spinner from "@/components/common/Spinner";
 
 interface KnowledgeItem {
   title: string;
@@ -32,7 +33,11 @@ export default function HistoryClient() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner size="large" />
+      </div>
+    );
   }
 
   return (

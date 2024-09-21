@@ -2,7 +2,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import Spinner from "./Spinner";
+import Spinner from "../common/Spinner";
 import type { ClassAttributes, HTMLAttributes } from "react";
 import type { ExtraProps } from "react-markdown";
 

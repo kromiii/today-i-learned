@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import Spinner from "./Spinner";
+import Spinner from "../common/Spinner";
 
 interface Knowledge {
   title: string;
