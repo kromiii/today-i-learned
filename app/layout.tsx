@@ -10,6 +10,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://today-i-learned.app'),
   title: "Today I Learned - AI-Powered Learning Assistant",
   description:
     "An AI-powered learning support tool that helps you record daily discoveries, interact with AI, and track your learning progress.",
@@ -36,8 +37,6 @@ export const metadata: Metadata = {
       "Record your daily discoveries and experience your growth with AI support.",
     images: ["/images/og-image.jpg"], // Twitter用画像のパスを適切に設定してください
   },
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: "#3B82F6", // Tailwind CSSのblue-500カラー
   applicationName: "Today I Learned",
   category: "Education",
 };
