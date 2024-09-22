@@ -20,17 +20,6 @@ export default function Footer() {
             Contact
           </a>
         </div>
-        <div>
-          created by {" "}
-          <a
-            href="https://kuromiyahiroyuki.tech/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
-          >
-            Hiroyuki Kuromiya
-          </a>
-        </div>
       </div>
     </footer>
   );
