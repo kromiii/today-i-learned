@@ -7,17 +7,22 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const tavily = new TavilyClient({
-  apiKey: process.env.TAVILY_API_KEY,
-});
+const tavily = process.env.TAVILY_API_KEY
+  ? new TavilyClient({
+      apiKey: process.env.TAVILY_API_KEY,
+    })
+  : null;
 
 async function search(query: string) {
+  if (!tavily) {
+    return null;
+  }
   const results = await tavily.search({
     query: query,
-    search_depth: 'basic',
+    search_depth: "basic",
     include_answer: false,
     include_images: false,
-    max_results: 5
+    max_results: 5,
   });
   return results;
 }
@@ -32,19 +37,21 @@ export async function POST(req: Request) {
   }
 
   try {
-    const userInput = messages[messages.length - 1].content;
-    const searchResults = await search(userInput);
-    const searchResultsText = searchResults.results
-      .map((result) => `${result.title}: ${result.content}`)
-      .join("\n");
-    console.log(searchResultsText)
-    const updatedMessages = [
-      ...messages,
-      {
-        role: "assistant",
-        content: `以下は関連する検索結果です：\n${searchResultsText}`,
-      },
-    ];
+    let updatedMessages = [...messages];
+
+    if (tavily) {
+      const userInput = messages[messages.length - 1].content;
+      const searchResults = await search(userInput);
+      if (searchResults) {
+        const searchResultsText = searchResults.results
+          .map((result) => `${result.title}: ${result.content}`)
+          .join("\n");
+        updatedMessages.push({
+          role: "assistant",
+          content: `以下は関連する検索結果です：\n${searchResultsText}`,
+        });
+      }
+    }
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
