@@ -42,7 +42,6 @@ export async function POST(req: Request) {
     if (webSearchEnabled && tavily) {
       const userInput = messages[messages.length - 1].content;
       const searchResults = await search(userInput);
-      console.log(searchResults)
       if (searchResults) {
         const searchResultsText = searchResults.results
           .map((result) => `${result.title}: ${result.content}`)

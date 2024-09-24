@@ -56,12 +56,20 @@ export default function ChatInput({
               checked={webSearchEnabled}
               onChange={toggleWebSearch}
             />
-            <div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-            <div className={`absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition ${webSearchEnabled ? 'transform translate-x-full bg-blue-600' : ''}`}></div>
+            <div
+              className={`w-10 h-4 rounded-full shadow-inner transition-colors ${
+                webSearchEnabled ? "bg-blue-400" : "bg-gray-400"
+              }`}
+            ></div>
+            <div
+              className={`absolute w-6 h-6 rounded-full shadow -left-1 -top-1 transition-transform ${
+                webSearchEnabled
+                  ? "transform translate-x-full bg-blue-600"
+                  : "bg-white"
+              }`}
+            ></div>
           </div>
-          <div className="ml-3 text-gray-700 font-medium">
-            Web Search
-          </div>
+          <div className="ml-3 text-gray-700 font-medium">Web Search</div>
         </label>
       </div>
     </form>
