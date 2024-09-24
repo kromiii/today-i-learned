@@ -49,7 +49,7 @@ export async function POST(req: Request) {
           .join("\n");
         updatedMessages.push({
           role: "system",
-          content: `以下は関連する検索結果です：\n${searchResultsText}\n\nこの情報を参考に、ユーザーの質問に答えてください。`,
+          content: `Here are the relevant search results:\n${searchResultsText}\n\nPlease answer the user's question based on this information.`,
         });
       }
     }
