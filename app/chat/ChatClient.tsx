@@ -8,14 +8,13 @@ import KnowledgeButton from "@/components/chat/KnowledgeButton";
 import KnowledgeModal from "@/components/chat/KnowledgeModal";
 
 export default function ChatClient() {
-  const [messages, setMessages] = useState<{ role: string; content: string }[]>(
-    []
-  );
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isKnowledgeLoading, setIsKnowledgeLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [knowledge, setKnowledge] = useState({ title: "", description: "" });
+  const [webSearchEnabled, setWebSearchEnabled] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +33,7 @@ export default function ChatClient() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: newMessages, webSearchEnabled }),
       });
 
       if (!response.ok) {
@@ -56,6 +55,10 @@ export default function ChatClient() {
 
   const handleRefresh = () => {
     setMessages([]);
+  };
+
+  const toggleWebSearch = () => {
+    setWebSearchEnabled(!webSearchEnabled);
   };
 
   const handleTurnIntoKnowledge = async () => {
@@ -96,6 +99,8 @@ export default function ChatClient() {
           handleSubmit={handleSubmit}
           isLoading={isLoading}
           handleRefresh={handleRefresh}
+          webSearchEnabled={webSearchEnabled}
+          toggleWebSearch={toggleWebSearch}
         />
       </Header>
 
