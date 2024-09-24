@@ -28,7 +28,7 @@ async function search(query: string) {
 }
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, webSearchEnabled } = await req.json();
 
   const user = await getCurrentUser();
 
@@ -39,22 +39,23 @@ export async function POST(req: Request) {
   try {
     let updatedMessages = [...messages];
 
-    if (tavily) {
+    if (webSearchEnabled && tavily) {
       const userInput = messages[messages.length - 1].content;
       const searchResults = await search(userInput);
+      console.log(searchResults)
       if (searchResults) {
         const searchResultsText = searchResults.results
           .map((result) => `${result.title}: ${result.content}`)
           .join("\n");
         updatedMessages.push({
-          role: "assistant",
-          content: `以下は関連する検索結果です：\n${searchResultsText}`,
+          role: "system",
+          content: `以下は関連する検索結果です：\n${searchResultsText}\n\nこの情報を参考に、ユーザーの質問に答えてください。`,
         });
       }
     }
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4",
       messages: updatedMessages,
     });
 

@@ -6,6 +6,8 @@ interface ChatInputProps {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
   handleRefresh: () => void;
+  webSearchEnabled: boolean;
+  toggleWebSearch: () => void;
 }
 
 export default function ChatInput({
@@ -14,6 +16,8 @@ export default function ChatInput({
   handleSubmit,
   isLoading,
   handleRefresh,
+  webSearchEnabled,
+  toggleWebSearch,
 }: ChatInputProps) {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row">
@@ -36,13 +40,30 @@ export default function ChatInput({
           {isLoading ? "Sending..." : "Send"}
         </button>
       </div>
-      <button
-        type="button"
-        onClick={handleRefresh}
-        className="bg-gray-300 text-gray-700 p-2 rounded-lg hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 sm:ml-2 whitespace-nowrap"
-      >
-        Refresh
-      </button>
+      <div className="flex items-center sm:ml-2">
+        <button
+          type="button"
+          onClick={handleRefresh}
+          className="bg-gray-300 text-gray-700 p-2 rounded-lg hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 whitespace-nowrap mr-2"
+        >
+          Refresh
+        </button>
+        <label className="flex items-center cursor-pointer">
+          <div className="relative">
+            <input
+              type="checkbox"
+              className="sr-only"
+              checked={webSearchEnabled}
+              onChange={toggleWebSearch}
+            />
+            <div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+            <div className={`absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition ${webSearchEnabled ? 'transform translate-x-full bg-blue-600' : ''}`}></div>
+          </div>
+          <div className="ml-3 text-gray-700 font-medium">
+            Web Search
+          </div>
+        </label>
+      </div>
     </form>
   );
 }
