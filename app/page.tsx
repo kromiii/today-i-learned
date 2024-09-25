@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { ReactNode } from "react";
 import SignInButton from "@/components/header/SignInButton";
+import NewsSection from '@/components/NewsSection';
 
 interface FeatureCardProps {
   title: string;
@@ -78,6 +79,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <NewsSection />
     </main>
   );
 }
