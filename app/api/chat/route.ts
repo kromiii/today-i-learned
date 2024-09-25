@@ -3,6 +3,8 @@ import OpenAI from "openai";
 import { TavilyClient } from "tavily";
 import { getCurrentUser } from "@/libs/firebase/firebase-admin";
 
+export const maxDuration = 60; // 60 seconds is the maximum allowed by Vercel.
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
