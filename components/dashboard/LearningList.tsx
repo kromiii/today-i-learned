@@ -15,19 +15,17 @@ export default function LearningList({ learnings }: LearningListProps) {
         🚀 Today&apos;s Discoveries
       </h2>
       {learnings.length > 0 ? (
-        <>
-          <ul className="space-y-4 mb-6">
-            {learnings.map((learning, index) => (
-              <li key={index} className="mb-2">
+        <ul className="space-y-4 mb-6">
+          {learnings.map((learning, index) => (
+            <li key={index} className="mb-2">
+              <div className="flex items-center justify-between">
                 <h3 className="font-semibold">{learning.title}</h3>
-                <p className="text-gray-600">{learning.description}</p>
-              </li>
-            ))}
-          </ul>
-          <div className="text-center">
-            <TwitterShareButton learnings={learnings} />
-          </div>
-        </>
+                <TwitterShareButton learning={learning} />
+              </div>
+              <p className="text-gray-600">{learning.description}</p>
+            </li>
+          ))}
+        </ul>
       ) : (
         <div className="text-center py-8">
           <p className="text-xl font-semibold text-gray-500">
