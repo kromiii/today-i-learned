@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { TavilyClient } from "tavily";
 import { getCurrentUser } from "@/libs/firebase/firebase-admin";
 
 export const maxDuration = 60; // 60 seconds is the maximum allowed by Vercel.
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 const tavily = process.env.TAVILY_API_KEY
   ? new TavilyClient({
@@ -55,12 +53,14 @@ export async function POST(req: Request) {
       }
     }
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4",
-      messages: updatedMessages,
-    });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-002" });
 
-    return NextResponse.json({ result: completion.choices[0].message });
+    const prompt = updatedMessages.map(msg => `${msg.role}: ${msg.content}`).join('\n');
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+
+    return NextResponse.json({ result: { content: text } });
   } catch (error) {
     return NextResponse.json(
       { error: "An error occurred during your request." },
