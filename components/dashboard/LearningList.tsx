@@ -18,8 +18,8 @@ export default function LearningList({ learnings }: LearningListProps) {
         <ul className="space-y-4 mb-6">
           {learnings.map((learning, index) => (
             <li key={index} className="mb-2">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">{learning.title}</h3>
+              <div className="flex items-center">
+                <h3 className="font-semibold mr-2">{learning.title}</h3>
                 <TwitterShareButton learning={learning} />
               </div>
               <p className="text-gray-600">{learning.description}</p>

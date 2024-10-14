@@ -27,9 +27,12 @@ export default function TwitterShareButton({
       href={twitterUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-block bg-blue-400 text-white px-2 py-1 rounded-full hover:bg-blue-500 transition-colors duration-200 text-sm"
+      className="inline-flex items-center bg-black text-white px-2 py-0.5 rounded-full hover:bg-gray-800 transition-colors duration-200 text-xs"
     >
-      Tweet
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 mr-1">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+      Post
     </a>
   );
 }
