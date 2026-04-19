@@ -11,8 +11,9 @@ export async function POST(request: NextRequest) {
   const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
 
   const sessionCookie = await createSessionCookie(idToken, { expiresIn });
+  const cookieStore = await cookies();
 
-  cookies().set("__session", sessionCookie, {
+  cookieStore.set("__session", sessionCookie, {
     maxAge: expiresIn,
     httpOnly: true,
     secure: true,
