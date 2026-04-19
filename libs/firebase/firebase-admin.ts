@@ -49,7 +49,8 @@ export async function getCurrentUser() {
 
 async function getSession() {
   try {
-    return cookies().get("__session")?.value;
+    const cookieStore = await cookies();
+    return cookieStore.get("__session")?.value;
   } catch (error) {
     return undefined;
   }
