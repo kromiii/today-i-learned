@@ -7,6 +7,22 @@ import MessageList from "@/components/chat/MessageList";
 import KnowledgeButton from "@/components/chat/KnowledgeButton";
 import KnowledgeModal from "@/components/chat/KnowledgeModal";
 
+const trackAnalyticsEvent = (
+  eventName: "chat_send" | "knowledge_generate",
+  params: Record<string, string | number | boolean>
+) => {
+  if (typeof window === "undefined") return;
+
+  const windowWithDataLayer = window as Window & {
+    dataLayer?: Record<string, string | number | boolean>[];
+  };
+  windowWithDataLayer.dataLayer = windowWithDataLayer.dataLayer || [];
+  windowWithDataLayer.dataLayer.push({
+    event: eventName,
+    ...params,
+  });
+};
+
 export default function ChatClient() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [input, setInput] = useState("");
@@ -26,6 +42,10 @@ export default function ChatClient() {
     setInput("");
 
     setMessages([...newMessages, { role: "assistant", content: "Loading..." }]);
+    trackAnalyticsEvent("chat_send", {
+      web_search_enabled: webSearchEnabled,
+      message_length: input.length,
+    });
 
     try {
       const response = await fetch("/api/chat", {
@@ -79,6 +99,9 @@ export default function ChatClient() {
 
       const { result } = await response.json();
       setKnowledge(result);
+      trackAnalyticsEvent("knowledge_generate", {
+        message_count: messages.length,
+      });
     } catch (error) {
       console.error("Error turning into knowledge:", error);
       setKnowledge({
