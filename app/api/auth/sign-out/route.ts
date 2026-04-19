@@ -7,7 +7,8 @@ import { APIResponse } from "@/types";
 import { revokeAllSessions } from "@/libs/firebase/firebase-admin";
 
 export async function GET() {
-  const sessionCookie = cookies().get("__session")?.value;
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("__session")?.value;
 
   if (!sessionCookie)
     return NextResponse.json<APIResponse<string>>(
@@ -15,7 +16,7 @@ export async function GET() {
       { status: 400 }
     );
 
-  cookies().delete("__session");
+  cookieStore.delete("__session");
 
   await revokeAllSessions(sessionCookie);
 
