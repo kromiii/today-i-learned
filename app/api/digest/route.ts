@@ -11,6 +11,12 @@ const Knowledge = z.object({
   description: z.string(),
 });
 
+const KnowledgeResponse = z.union([
+  Knowledge,
+  z.array(Knowledge).nonempty(),
+  z.object({ result: Knowledge }),
+]);
+
 interface Message {
   role: string;
   content: string;
@@ -48,12 +54,14 @@ Response (in JSON format):
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
+    const parsedResponse = KnowledgeResponse.parse(JSON.parse(text));
 
-    // Parse the JSON response
-    const parsedResponse = JSON.parse(text);
-
-    // Validate the response against the Knowledge schema
-    const knowledge = Knowledge.parse(parsedResponse);
+    const knowledge =
+      Array.isArray(parsedResponse)
+        ? parsedResponse[0]
+        : "result" in parsedResponse
+          ? parsedResponse.result
+          : parsedResponse;
 
     return NextResponse.json({ result: knowledge });
   } catch (error) {
