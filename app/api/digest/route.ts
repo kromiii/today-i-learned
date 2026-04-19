@@ -4,6 +4,7 @@ import { z } from "zod";
 import { getCurrentUser } from "@/libs/firebase/firebase-admin";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 
 const Knowledge = z.object({
   title: z.string(),
@@ -26,7 +27,7 @@ export async function POST(req: Request) {
 
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-002",
+      model: GEMINI_MODEL,
       generationConfig: { responseMimeType: "application/json" },
     });
 

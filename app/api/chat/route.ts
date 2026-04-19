@@ -6,6 +6,7 @@ import { getCurrentUser } from "@/libs/firebase/firebase-admin";
 export const maxDuration = 60; // 60 seconds is the maximum allowed by Vercel.
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 
 const tavily = process.env.TAVILY_API_KEY
   ? new TavilyClient({
@@ -53,7 +54,7 @@ export async function POST(req: Request) {
       }
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-002" });
+    const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
 
     const prompt = updatedMessages.map(msg => `${msg.role}: ${msg.content}`).join('\n');
     const result = await model.generateContent(prompt);
